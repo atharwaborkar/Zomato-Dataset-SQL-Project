@@ -4,10 +4,10 @@ By using the Zomato Dataset I have solved the Real time Business Problems.
 # Firstly Create the database-
 Create database Zomato
 
-Below query is for using the dataset-
+**Below query is for using the dataset-**
 use Zomato
 
-Below query is for creating the table as goldusers_signup-
+**Below query is for creating the table as goldusers_signup-**
 
 CREATE TABLE goldusers_signup
 (
@@ -15,32 +15,36 @@ userid integer,
 gold_signup_date VARCHAR(10)
 );
 
-Below query is for Inserting the values into goldusers_signup table-
+**Below query is for Inserting the values into goldusers_signup table-**
 
 INSERT INTO goldusers_signup VALUES 
 (1,'22-09-2017'),
 (3,'21-04-2017');
 
-Below query is for Creating the users table-
+**Below query is for Creating the users table-**
+
 CREATE TABLE users
 (
 userid integer,signup_date VARCHAR(10)
 ); 
 
-## Below query is for Inserting the values into users table-
+**Below query is for Inserting the values into users table-**
+
 INSERT INTO users VALUES
 (1,'09-02-2014'),
 (2,'01-15-2015'),
 (3,'04-11-2014');
 
-## Below query is for Creating the sales table-
+**Below query is for Creating the sales table-**
+
 CREATE TABLE sales(
 userid int,
 created_date VARCHAR(10),
 product_id int
 ); 
 
-## Below query is for Inserting the values into sales table-
+**Below query is for Inserting the values into sales table-**
+
 INSERT INTO sales VALUES 
 (1,'04-19-2017',2),
 (3,'12-18-2019',1),
@@ -59,7 +63,8 @@ INSERT INTO sales VALUES
 (2,'11-08-2017',2),
 (2,'09-10-2018',3);
 
-## Below query is for Creating the product table-
+**Below query is for Creating the product table-**
+
 CREATE TABLE product
 (
 product_id integer,
@@ -67,7 +72,8 @@ product_name VARCHAR(30),
 price integer
 ); 
 
-## Below query is for Inserting the values into product table-
+**Below query is for Inserting the values into product table-**
+
 INSERT INTO product
  VALUES
 (1,'p1',980),
@@ -79,28 +85,30 @@ select * from product;
 select * from goldusers_signup;
 select * from users;
 
-## What is the total amount each customer spent on Zomato?
+**What is the total amount each customer spent on Zomato?**
+
 select s.userid AS User_Name ,SUM(p.price) AS TOTAL_PRICE from sales s
 inner join product p on p.product_id = s.product_id
 GROUP BY 1; 
 
-## How many days does each customer has visited zomato?
+**How many days does each customer has visited zomato?**
+
 select userid from users;
 select count(created_date) AS TOTAL_DAYS , userid AS USER_ID from sales
 GROUP BY userid
 
-## What was the first product purched by each customer?
+**What was the first product purched by each customer?**
+
 select u.userid as userid , u.product_id as productid , MIN(u.created_date) AS First_product_purchased_date from sales u
 inner join product p on p.product_id = u.product_id
 GROUP BY 1;
 
 
-## Select userid from users
+*Select userid from users*
 
 ## What is the most purchased items in the menu and how many times was it purchased by all customer?
 
-What is the most purchased items in the menu?
-1) What is the most purchased items in the menu
+*What is the most purchased items in the menu?*
 
 select distinct(product_id) ,MAX(DISTINCT(userid)) from sales
 
@@ -108,12 +116,14 @@ select distinct(userid) ,COUNT(DISTINCT(product_id)) from sales group by 1
 
 select distinct(userid) ,MAX(product_id) from sales
 
-How many times was it purchased by all customer?
+*How many times was it purchased by all customer?*
+
 select userid ,count(product_id) from sales where product_id =
 (select top 1 product_id from sales group by product_id order by count(product_id) desc)
 group by userid
 
-## Which item was the most popular for each customer?
+**Which item was the most popular for each customer?**
+
 select rank() over(partition by userid order by cnt desc)
 (select userid,product_id,count(product_id) cnt from sales group by userid,product_id)
 
@@ -136,7 +146,8 @@ order by userid) as u
 inner join product p on u.product_id = p.product_id 
 where rank_p = 1;
 
-## Which iten was purched first by the customer and after that they become the Member?
+**Which iten was purched first by the customer and after that they become the Member?**
+
 select userid , created_date ,rank() over(partition by userid order by created_date) as rank_p
 (select s.userid , s.created_date , s.product_id , g.gold_signup_date from sales s
 inner join goldusers_signup g on s.userid = g.userid) as c
@@ -166,7 +177,7 @@ INNER JOIN product p ON fmp.product_id = p.product_id
 WHERE rank_p = 1
 ORDER BY userid;
 
-## Which item was purchased just before the customer became a member?
+**Which item was purchased just before the customer became a member?**
 
 WITH
  first_member_purchase
@@ -185,7 +196,8 @@ INNER JOIN product p ON fmp.product_id = p.product_id
 WHERE rank_p = 1
 ORDER BY userid;
 
-## What is the total items and amount spent for each member before they became a member?
+**What is the total items and amount spent for each member before they became a member?**
+
 select s.userid , sum(p.price) from sales s
 inner join sales s on p.product_id = s.product_id
 inner join users u on s.userid = u.userid
@@ -204,7 +216,7 @@ where signup_date < created_date
 group by userid
 order by userid
 
-## If each $1 spent equates to 10 points and sushi has a 2x points multiplier — how many points would each customer have?
+**If each $1 spent equates to 10 points and sushi has a 2x points multiplier — how many points would each customer have?**
 
 Let’s breakdown the question.
 
