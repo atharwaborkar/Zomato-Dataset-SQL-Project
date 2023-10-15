@@ -4,7 +4,7 @@ By using the Zomato Dataset I have solved the Real time Business Problems.
 # Firstly Create the database-
 Create database Zomato
 
-## Below query is for using the dataset-
+""Below query is for using the dataset-""
 use Zomato
 
 ## Below query is for creating the table as goldusers_signup-
