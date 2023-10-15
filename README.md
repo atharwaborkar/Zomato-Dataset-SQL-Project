@@ -4,22 +4,24 @@ By using the Zomato Dataset I have solved the Real time Business Problems.
 # Firstly Create the database-
 Create database Zomato
 
-""Below query is for using the dataset-""
+Below query is for using the dataset-
 use Zomato
 
-## Below query is for creating the table as goldusers_signup-
+Below query is for creating the table as goldusers_signup-
+
 CREATE TABLE goldusers_signup
 (
 userid integer,
 gold_signup_date VARCHAR(10)
 );
 
-## Below query is for Inserting the values into goldusers_signup table-
+Below query is for Inserting the values into goldusers_signup table-
+
 INSERT INTO goldusers_signup VALUES 
 (1,'22-09-2017'),
 (3,'21-04-2017');
 
-## Below query is for Creating the users table-
+Below query is for Creating the users table-
 CREATE TABLE users
 (
 userid integer,signup_date VARCHAR(10)
