@@ -85,19 +85,19 @@ select * from product;
 select * from goldusers_signup;
 select * from users;
 
-**What is the total amount each customer spent on Zomato?**
+**1) What is the total amount each customer spent on Zomato?**
 
 select s.userid AS User_Name ,SUM(p.price) AS TOTAL_PRICE from sales s
 inner join product p on p.product_id = s.product_id
 GROUP BY 1; 
 
-**How many days does each customer has visited zomato?**
+**2) How many days does each customer has visited zomato?**
 
 select userid from users;
 select count(created_date) AS TOTAL_DAYS , userid AS USER_ID from sales
 GROUP BY userid
 
-**What was the first product purched by each customer?**
+**3) What was the first product purched by each customer?**
 
 select u.userid as userid , u.product_id as productid , MIN(u.created_date) AS First_product_purchased_date from sales u
 inner join product p on p.product_id = u.product_id
@@ -106,7 +106,7 @@ GROUP BY 1;
 
 *Select userid from users*
 
-## What is the most purchased items in the menu and how many times was it purchased by all customer?
+**4) What is the most purchased items in the menu and how many times was it purchased by all customer?**
 
 *What is the most purchased items in the menu?*
 
@@ -122,7 +122,7 @@ select userid ,count(product_id) from sales where product_id =
 (select top 1 product_id from sales group by product_id order by count(product_id) desc)
 group by userid
 
-**Which item was the most popular for each customer?**
+**5) Which item was the most popular for each customer?**
 
 select rank() over(partition by userid order by cnt desc)
 (select userid,product_id,count(product_id) cnt from sales group by userid,product_id)
@@ -146,7 +146,7 @@ order by userid) as u
 inner join product p on u.product_id = p.product_id 
 where rank_p = 1;
 
-**Which iten was purched first by the customer and after that they become the Member?**
+**6) Which iten was purched first by the customer and after that they become the Member?**
 
 select userid , created_date ,rank() over(partition by userid order by created_date) as rank_p
 (select s.userid , s.created_date , s.product_id , g.gold_signup_date from sales s
@@ -177,7 +177,7 @@ INNER JOIN product p ON fmp.product_id = p.product_id
 WHERE rank_p = 1
 ORDER BY userid;
 
-**Which item was purchased just before the customer became a member?**
+**7) Which item was purchased just before the customer became a member?**
 
 WITH
  first_member_purchase
@@ -196,7 +196,7 @@ INNER JOIN product p ON fmp.product_id = p.product_id
 WHERE rank_p = 1
 ORDER BY userid;
 
-**What is the total items and amount spent for each member before they became a member?**
+**8) What is the total items and amount spent for each member before they became a member?**
 
 select s.userid , sum(p.price) from sales s
 inner join sales s on p.product_id = s.product_id
@@ -216,7 +216,7 @@ where signup_date < created_date
 group by userid
 order by userid
 
-**If each $1 spent equates to 10 points and sushi has a 2x points multiplier — how many points would each customer have?**
+**9) If each $1 spent equates to 10 points and sushi has a 2x points multiplier — how many points would each customer have?**
 
 Let’s breakdown the question.
 
