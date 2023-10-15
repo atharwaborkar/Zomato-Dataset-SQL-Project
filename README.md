@@ -1,7 +1,7 @@
 # Zomato-Dataset-SQL-Project
 By using the Zomato Dataset I have solved the Real time Business Problems.
 
-# Firstly Create the database-
+**Firstly Create the database-**
 Create database Zomato
 
 **Below query is for using the dataset-**
